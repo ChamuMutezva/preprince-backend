@@ -12,7 +12,7 @@ app.use(
     cors({
         origin:
             process.env.NODE_ENV === "production"
-                ? "https://preprince.co.za"
+                ? "https://preprince-backend.onrender.com"
                 : "http://localhost:5500",
         methods: ["POST", "OPTIONS"],
         allowedHeaders: ["Content-Type"],
