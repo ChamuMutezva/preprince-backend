@@ -27,9 +27,11 @@ const corsOptions = {
     origin: (origin, callback) => {
         // Allow requests from these origins
         const allowedOrigins = [
-            "http://localhost:5500",
-            "http://127.0.0.1:5500",
-            "https://preprince.co.za",
+            "http://localhost:5500", // Local development (frontend)
+            "http://127.0.0.1:5500", // Local development (frontend)
+            "https://preprince.co.za", // Production (frontend)
+            "http://localhost:3000", // Local development (backend)
+            "https://preprince-backend.onrender.com", // Production (backend)
         ];
 
         if (allowedOrigins.includes(origin) || !origin) {
@@ -63,7 +65,7 @@ app.post("/send-email", async (req, res) => {
         const { name, email, message } = req.body;
 
         if (!name || !email || !message) {
-          return res.status(400).json({ error: 'Missing required fields' });
+            return res.status(400).json({ error: "Missing required fields" });
         }
 
         const { data, error } = await resend.emails.send({
