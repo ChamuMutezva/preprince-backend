@@ -7,33 +7,24 @@ import { Resend } from "resend";
 dotenv.config();
 const app = express();
 
-// Middleware
-app.use(
-    cors({
-        origin:
-            process.env.NODE_ENV === "production"
-                ? "https://preprince-backend.onrender.com"
-                : "http://localhost:5500",
-        methods: ["POST", "OPTIONS"],
-        allowedHeaders: ["Content-Type"],
-    })
-);
 app.use(express.json());
 
 // Resend Client
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// CORS Configuration
+const allowedOrigins = [
+    "http://localhost:5500", // Local development (frontend)
+    "http://127.0.0.1:5500", // Local development (frontend)
+    "https://preprince.co.za", // Production (frontend)
+    "http://preprince.co.za", // Production (frontend - without HTTPS)
+    "http://localhost:3000", // Local development (backend)
+    "https://preprince-backend.onrender.com", // Production (backend)
+];
+
 const corsOptions = {
     origin: (origin, callback) => {
-        // Allow requests from these origins
-        const allowedOrigins = [
-            "http://localhost:5500", // Local development (frontend)
-            "http://127.0.0.1:5500", // Local development (frontend)
-            "https://preprince.co.za", // Production (frontend)
-            "http://localhost:3000", // Local development (backend)
-            "https://preprince-backend.onrender.com", // Production (backend)
-        ];
-
+        // Allow requests from allowed origins or when origin is undefined (e.g., same-origin requests)
         if (allowedOrigins.includes(origin) || !origin) {
             callback(null, true);
         } else {
