@@ -63,11 +63,10 @@ app.post("/send-email", async (req, res) => {
             from: `Preprince Contact <contact@preprince.co.za>`,
             to: ["admin@preprince.co.za"],
             subject: `New message from ${name}`,
-            html: `
-        <h3>New Contact Form Submission</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
+            html: `<p>New Contact Form Submission</p>
+        <p>Name: ${name}</p>
+        <p>Email: ${email}</p>
+        <p>Message:</p>
         <p>${message}</p>
       `,
         });
